@@ -1,5 +1,5 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 
 
 # Create your models here.
@@ -11,4 +11,8 @@ class BlogPost(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
+        return str(self.user.username)
+
+    @property
+    def owner(self):
         return self.user
