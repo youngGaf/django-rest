@@ -1,9 +1,11 @@
 from django.db.models import Q
 from rest_framework import generics, mixins
+from django.contrib.auth.models import User
+from rest_framework.permissions import AllowAny
 
 from .permissions import IsOwnerOrReadOnly
 from postings.models import BlogPost
-from .serializers import BlogPostSerializers
+from .serializers import BlogPostSerializers, RegisterSerializer
 
 
 class BlogPostAPIView(mixins.CreateModelMixin, generics.ListAPIView):
@@ -44,3 +46,10 @@ class BlogPostRudView(generics.RetrieveUpdateDestroyAPIView):
     # def get_object(self):
     #     pk = self.kwargs.get('pk')
     #     return BlogPost.objects.get(pk=pk)
+
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
+
